@@ -1,0 +1,11 @@
+{
+  "AppSyncApiName": "ltucodingchallenge",
+  "DynamoDBBillingMode": "PAY_PER_REQUEST",
+  "DynamoDBEnableServerSideEncryption": false,
+  "AuthCognitoUserPoolId": {
+    "Fn::GetAtt": [
+      "authltucodingchallengef6e7f6b6",
+      "Outputs.UserPoolId"
+    ]
+  }
+}
