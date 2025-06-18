@@ -17,7 +17,7 @@ export const LoginScreen = ({ onLoginSuccess }) => {
       // If user needs to set a new password, automatically handle it
       if (user.challengeName === "NEW_PASSWORD_REQUIRED") {
         const completedUser = await Auth.completeNewPassword(user, password);
-        console.log("✅ New password set. Authenticated:", completedUser);
+        console.log("✅ New password set. User is authenticated");
       }
       onLoginSuccess();
     } catch (error) {

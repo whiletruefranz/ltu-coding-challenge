@@ -53,13 +53,40 @@ npm install -g @aws-amplify/cli
 yarn install
 ```
 
-4. Initialize Amplify (choose "existing environment"):
+4. Initialize Amplify:
 
 ```bash
-amplify confgigure
+amplify configure
+```
+- Make sure to login as root user
+- Follow instructions in terminal (set up IAM user, generate access keys, etc.)
+- For IAM user choose "Attach policies directly" and add the following policies:
+  - `AdministratorAccess`
+
+#### 1. Initialize Amplify project
+```bash
 amplify init
+```
+- Choose Amplify Gen 1
+- Choose AWS profile as auth method
+
+#### 2. Restore backend configuration
+```bash
+git restore amplify/backend/backend-config.json #restore backend config
+```
+
+#### 3. Initialize Amplify again with existing environment
+```bash
+amplify init
+```
+- Use existing environment (dev)
+
+#### 4. Build and deploy
+```bash
 amplify push
 ```
+- do not create an API key
+- update code for GraphQL API
 
 5. Start the app:
 
@@ -68,6 +95,12 @@ yarn start
 ```
 
 6. **In the AWS Console, create a Cognito user manually (email and password only) and set status to "CONFIRMED"**
+    - Go to the Cognito service in the AWS Console
+    - Select the User Pool used by the app
+    - Navigate to the "Users" section
+    - Click "Create user"
+    - Enter an email, choose not to send invitation, check "Mark email as verified", set a password
+   
 7. Log in using your credentials from the login screen
 
 ---
