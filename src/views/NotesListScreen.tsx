@@ -1,5 +1,7 @@
+import { useRoute } from "@react-navigation/native"
 import React, { useContext, useMemo, useState } from "react"
 import { FlatList, SafeAreaView, StyleSheet, View } from "react-native"
+
 import { Note } from "../API"
 import { LtuButton } from "../components/Button"
 import { BUTTON_VARIANTS } from "../components/Button/button.types"
@@ -21,6 +23,9 @@ export function NotesListScreen() {
 	const [noteTitle, setNoteTitle] = useState("")
 	const [noteContent, setNoteContent] = useState("")
 	const [loading, setLoading] = useState(false)
+	const route = useRoute()
+
+	const isArchiveScreen = route.params?.isArchive
 
 	const handleAddNote = async () => {
 		setLoading(true)
@@ -48,7 +53,7 @@ export function NotesListScreen() {
 	}
 	// Filter unarchived notes, useMemo to optimize performance on larger lists
 	const unarchivedNotes = useMemo(() => {
-		return fetchedNotes.notes.filter((note: Note) => !note.archived)
+		return fetchedNotes.notes.filter((note: Note) => (isArchiveScreen ? note.archived : !note.archived))
 	}, [fetchedNotes.notes])
 
 	// loading state handling
@@ -76,53 +81,54 @@ export function NotesListScreen() {
 							<View>
 								<LtuTitle bold>{item.title}</LtuTitle>
 								<LtuText>{item.content}</LtuText>
-								{item.archived && <LtuText>Archived</LtuText>}
 							</View>
 							<View style={{ flex: 1 }} />
 							<LtuButton
 								variant={BUTTON_VARIANTS.PRIMARY}
 								size="sm"
-								style={{ width: 40, paddingVertical: 2, paddingHorizontal: 2 }}
+								style={styles.miniButton}
 								onPress={() => {
 									handleArchiveNote(item)
 								}}
 							>
 								<LtuIcon
-									name="archive"
-									color={colors.ltuRed}
+									name={isArchiveScreen ? "arrow-up-circle-outline" : "archive"}
+									color={isArchiveScreen ? colors.ltuGreen : colors.ltuRed}
 								/>
 							</LtuButton>
 						</LtuCard>
 					)}
 					contentContainerStyle={{ paddingVertical: 20 }}
 					ListFooterComponent={
-						<View style={styles.inputContainer}>
-							<LtuHeadline style={{ marginBottom: 20, fontWeight: "bold" }}>Neue Notiz hinzufügen</LtuHeadline>
-							<LtuLabel>Titel</LtuLabel>
-							<LtuInput
-								style={styles.input}
-								value={noteTitle}
-								onChangeText={setNoteTitle}
-							/>
-							<LtuLabel>Inhalt</LtuLabel>
-							<LtuInput
-								style={styles.input}
-								value={noteContent}
-								onChangeText={setNoteContent}
-							/>
-							<LtuButton
-								variant={BUTTON_VARIANTS.PRIMARY}
-								onPress={handleAddNote}
-								isLoading={loading}
-							>
-								<LtuTitle
-									bold
-									style={{ color: colors.ltuWhite }}
+						!isArchiveScreen ? (
+							<View style={styles.inputContainer}>
+								<LtuHeadline style={{ marginBottom: 20, fontWeight: "bold" }}>Neue Notiz hinzufügen</LtuHeadline>
+								<LtuLabel>Titel</LtuLabel>
+								<LtuInput
+									style={styles.input}
+									value={noteTitle}
+									onChangeText={setNoteTitle}
+								/>
+								<LtuLabel>Inhalt</LtuLabel>
+								<LtuInput
+									style={styles.input}
+									value={noteContent}
+									onChangeText={setNoteContent}
+								/>
+								<LtuButton
+									variant={BUTTON_VARIANTS.PRIMARY}
+									onPress={handleAddNote}
+									isLoading={loading}
 								>
-									Notiz hinzufügen
-								</LtuTitle>
-							</LtuButton>
-						</View>
+									<LtuTitle
+										bold
+										style={{ color: colors.ltuWhite }}
+									>
+										Notiz hinzufügen
+									</LtuTitle>
+								</LtuButton>
+							</View>
+						) : null
 					}
 				/>
 			</View>
@@ -155,5 +161,10 @@ const styles = StyleSheet.create({
 		flexDirection: "row",
 		gap: 10,
 		alignItems: "center",
+	},
+	miniButton: {
+		width: 40,
+		paddingVertical: 2,
+		paddingHorizontal: 2,
 	},
 })
