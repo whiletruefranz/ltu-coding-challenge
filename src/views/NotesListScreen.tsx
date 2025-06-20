@@ -51,9 +51,11 @@ export function NotesListScreen() {
 		}
 		setLoading(false)
 	}
-	// Filter unarchived notes, useMemo to optimize performance on larger lists
+	// Filter unarchived notes, useMemo to optimize performance on larger lists, sort latest to bottom
 	const unarchivedNotes = useMemo(() => {
-		return fetchedNotes.notes.filter((note: Note) => (isArchiveScreen ? note.archived : !note.archived))
+		return fetchedNotes.notes
+			.filter((note: Note) => (isArchiveScreen ? note.archived : !note.archived))
+			.sort((a: Note, b: Note) => a.createdAt?.localeCompare(b.createdAt || ""))
 	}, [fetchedNotes.notes])
 
 	// loading state handling

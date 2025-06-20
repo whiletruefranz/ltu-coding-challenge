@@ -6,6 +6,7 @@
     "defaultAuthType": {
       "mode": "AMAZON_COGNITO_USER_POOLS",
       "cognitoUserPoolId": "authltucodingchallengef6e7f6b6"
-    }
+    },
+    "conflictResolution": {}
   }
 }
