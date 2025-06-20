@@ -1,0 +1,23 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-ltucodingchallenge-dev-81471-authRole",
+      "UnauthRoleArn": "arn:aws:iam::572101851848:role/amplify-ltucodingchallenge-dev-81471-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::572101851848:role/amplify-ltucodingchallenge-dev-81471-authRole",
+      "Region": "eu-central-1",
+      "DeploymentBucketName": "amplify-ltucodingchallenge-dev-81471-deployment",
+      "UnauthRoleName": "amplify-ltucodingchallenge-dev-81471-unauthRole",
+      "StackName": "amplify-ltucodingchallenge-dev-81471",
+      "StackId": "arn:aws:cloudformation:eu-central-1:572101851848:stack/amplify-ltucodingchallenge-dev-81471/089cf7d0-4dcb-11f0-bd3e-0a913426fe37",
+      "AmplifyAppId": "dxevm9u0x5ax2"
+    },
+    "categories": {
+      "auth": {
+        "ltucodingchallengef6e7f6b6": {}
+      },
+      "api": {
+        "ltucodingchallenge": {}
+      }
+    }
+  }
+}

@@ -41,8 +41,6 @@ yarn-error.*
 #amplify-do-not-edit-begin
 amplify/\#current-cloud-backend
 amplify/.config/local-*
-amplify/.config
-amplify/team-provider-info.json
 amplify/logs
 amplify/mock-data
 amplify/mock-api-resources
@@ -52,7 +50,6 @@ build/
 dist/
 node_modules/
 aws-exports.js
-src/aws-exports.js
 awsconfiguration.json
 amplifyconfiguration.json
 amplifyconfiguration.dart
