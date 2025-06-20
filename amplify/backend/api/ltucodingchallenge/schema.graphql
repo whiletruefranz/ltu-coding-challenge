@@ -11,4 +11,5 @@ type Note
   createdAt: AWSDateTime
   updatedAt: AWSDateTime
   archived: Boolean
+  wordCount: Int
 }

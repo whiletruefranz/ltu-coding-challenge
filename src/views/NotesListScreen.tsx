@@ -101,7 +101,7 @@ export function NotesListScreen() {
 										color={isArchiveScreen ? colors.ltuGreen : colors.ltuRed}
 									/>
 								</LtuButton>
-								<LtuLabel>Wörter: 42</LtuLabel>
+								{item.wordCount && <LtuLabel>Wörter: {item.wordCount}</LtuLabel>}
 							</View>
 						</LtuCard>
 					)}
