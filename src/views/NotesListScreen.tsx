@@ -1,6 +1,6 @@
 import { useRoute } from "@react-navigation/native"
 import React, { useContext, useMemo, useState } from "react"
-import { FlatList, SafeAreaView, StyleSheet, View } from "react-native"
+import { FlatList, KeyboardAvoidingView, SafeAreaView, StyleSheet, View } from "react-native"
 
 import { Note } from "../API"
 import { LtuButton } from "../components/Button"
@@ -62,7 +62,11 @@ export function NotesListScreen() {
 	}
 	return (
 		<SafeAreaView style={styles.container}>
-			<View style={styles.innerContainer}>
+			<KeyboardAvoidingView
+				behavior="position"
+				keyboardVerticalOffset={64}
+				style={styles.innerContainer}
+			>
 				{/* Error State handling, I'd like to use a toast here instead of that card*/}
 				{fetchedNotes.error && (
 					<LtuCard style={{ marginBottom: 20 }}>
@@ -78,24 +82,27 @@ export function NotesListScreen() {
 					renderItem={({ item }) => (
 						<LtuCard style={styles.noteCard}>
 							<LtuIcon name="book" />
-							<View>
+							<View style={{ flexShrink: 1 }}>
 								<LtuTitle bold>{item.title}</LtuTitle>
 								<LtuText>{item.content}</LtuText>
 							</View>
 							<View style={{ flex: 1 }} />
-							<LtuButton
-								variant={BUTTON_VARIANTS.PRIMARY}
-								size="sm"
-								style={styles.miniButton}
-								onPress={() => {
-									handleArchiveNote(item)
-								}}
-							>
-								<LtuIcon
-									name={isArchiveScreen ? "arrow-up-circle-outline" : "archive"}
-									color={isArchiveScreen ? colors.ltuGreen : colors.ltuRed}
-								/>
-							</LtuButton>
+							<View style={{ alignItems: "flex-end" }}>
+								<LtuButton
+									variant={BUTTON_VARIANTS.PRIMARY}
+									size="sm"
+									style={styles.miniButton}
+									onPress={() => {
+										handleArchiveNote(item)
+									}}
+								>
+									<LtuIcon
+										name={isArchiveScreen ? "arrow-up-circle-outline" : "archive"}
+										color={isArchiveScreen ? colors.ltuGreen : colors.ltuRed}
+									/>
+								</LtuButton>
+								<LtuLabel>Wörter: 42</LtuLabel>
+							</View>
 						</LtuCard>
 					)}
 					contentContainerStyle={{ paddingVertical: 20 }}
@@ -131,7 +138,7 @@ export function NotesListScreen() {
 						) : null
 					}
 				/>
-			</View>
+			</KeyboardAvoidingView>
 		</SafeAreaView>
 	)
 }
