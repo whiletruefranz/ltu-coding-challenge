@@ -18,6 +18,7 @@ export const createNote = /* GraphQL */ `mutation CreateNote(
     content
     createdAt
     updatedAt
+    archived
     owner
     __typename
   }
@@ -36,6 +37,7 @@ export const updateNote = /* GraphQL */ `mutation UpdateNote(
     content
     createdAt
     updatedAt
+    archived
     owner
     __typename
   }
@@ -54,6 +56,7 @@ export const deleteNote = /* GraphQL */ `mutation DeleteNote(
     content
     createdAt
     updatedAt
+    archived
     owner
     __typename
   }

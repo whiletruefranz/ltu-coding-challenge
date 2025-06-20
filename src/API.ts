@@ -8,6 +8,7 @@ export type CreateNoteInput = {
   content?: string | null,
   createdAt?: string | null,
   updatedAt?: string | null,
+  archived?: boolean | null,
 };
 
 export type ModelNoteConditionInput = {
@@ -15,6 +16,7 @@ export type ModelNoteConditionInput = {
   content?: ModelStringInput | null,
   createdAt?: ModelStringInput | null,
   updatedAt?: ModelStringInput | null,
+  archived?: ModelBooleanInput | null,
   and?: Array< ModelNoteConditionInput | null > | null,
   or?: Array< ModelNoteConditionInput | null > | null,
   not?: ModelNoteConditionInput | null,
@@ -61,6 +63,13 @@ export type ModelSizeInput = {
   between?: Array< number | null > | null,
 };
 
+export type ModelBooleanInput = {
+  ne?: boolean | null,
+  eq?: boolean | null,
+  attributeExists?: boolean | null,
+  attributeType?: ModelAttributeTypes | null,
+};
+
 export type Note = {
   __typename: "Note",
   id: string,
@@ -68,6 +77,7 @@ export type Note = {
   content?: string | null,
   createdAt?: string | null,
   updatedAt?: string | null,
+  archived?: boolean | null,
   owner?: string | null,
 };
 
@@ -77,6 +87,7 @@ export type UpdateNoteInput = {
   content?: string | null,
   createdAt?: string | null,
   updatedAt?: string | null,
+  archived?: boolean | null,
 };
 
 export type DeleteNoteInput = {
@@ -89,6 +100,7 @@ export type ModelNoteFilterInput = {
   content?: ModelStringInput | null,
   createdAt?: ModelStringInput | null,
   updatedAt?: ModelStringInput | null,
+  archived?: ModelBooleanInput | null,
   and?: Array< ModelNoteFilterInput | null > | null,
   or?: Array< ModelNoteFilterInput | null > | null,
   not?: ModelNoteFilterInput | null,
@@ -123,6 +135,7 @@ export type ModelSubscriptionNoteFilterInput = {
   content?: ModelSubscriptionStringInput | null,
   createdAt?: ModelSubscriptionStringInput | null,
   updatedAt?: ModelSubscriptionStringInput | null,
+  archived?: ModelSubscriptionBooleanInput | null,
   and?: Array< ModelSubscriptionNoteFilterInput | null > | null,
   or?: Array< ModelSubscriptionNoteFilterInput | null > | null,
   owner?: ModelStringInput | null,
@@ -158,6 +171,11 @@ export type ModelSubscriptionStringInput = {
   notIn?: Array< string | null > | null,
 };
 
+export type ModelSubscriptionBooleanInput = {
+  ne?: boolean | null,
+  eq?: boolean | null,
+};
+
 export type CreateNoteMutationVariables = {
   input: CreateNoteInput,
   condition?: ModelNoteConditionInput | null,
@@ -171,6 +189,7 @@ export type CreateNoteMutation = {
     content?: string | null,
     createdAt?: string | null,
     updatedAt?: string | null,
+    archived?: boolean | null,
     owner?: string | null,
   } | null,
 };
@@ -188,6 +207,7 @@ export type UpdateNoteMutation = {
     content?: string | null,
     createdAt?: string | null,
     updatedAt?: string | null,
+    archived?: boolean | null,
     owner?: string | null,
   } | null,
 };
@@ -205,6 +225,7 @@ export type DeleteNoteMutation = {
     content?: string | null,
     createdAt?: string | null,
     updatedAt?: string | null,
+    archived?: boolean | null,
     owner?: string | null,
   } | null,
 };
@@ -221,6 +242,7 @@ export type GetNoteQuery = {
     content?: string | null,
     createdAt?: string | null,
     updatedAt?: string | null,
+    archived?: boolean | null,
     owner?: string | null,
   } | null,
 };
@@ -241,6 +263,7 @@ export type ListNotesQuery = {
       content?: string | null,
       createdAt?: string | null,
       updatedAt?: string | null,
+      archived?: boolean | null,
       owner?: string | null,
     } | null >,
     nextToken?: string | null,
@@ -260,6 +283,7 @@ export type OnCreateNoteSubscription = {
     content?: string | null,
     createdAt?: string | null,
     updatedAt?: string | null,
+    archived?: boolean | null,
     owner?: string | null,
   } | null,
 };
@@ -277,6 +301,7 @@ export type OnUpdateNoteSubscription = {
     content?: string | null,
     createdAt?: string | null,
     updatedAt?: string | null,
+    archived?: boolean | null,
     owner?: string | null,
   } | null,
 };
@@ -294,6 +319,7 @@ export type OnDeleteNoteSubscription = {
     content?: string | null,
     createdAt?: string | null,
     updatedAt?: string | null,
+    archived?: boolean | null,
     owner?: string | null,
   } | null,
 };

@@ -1,5 +1,6 @@
-import React, { useContext, useState } from "react"
+import React, { useContext, useMemo, useState } from "react"
 import { FlatList, SafeAreaView, StyleSheet, View } from "react-native"
+import { Note } from "../API"
 import { LtuButton } from "../components/Button"
 import { BUTTON_VARIANTS } from "../components/Button/button.types"
 import { LtuCard } from "../components/Card"
@@ -13,6 +14,7 @@ import { LtuTitle } from "../components/typography/Title"
 import colors, { ltuRoseShade } from "../constants/colors"
 import AppContext from "../context/AppContext"
 import { createNoteService } from "../services/createNoteService"
+import { updateNoteService } from "../services/updateNoteService"
 
 export function NotesListScreen() {
 	const { fetchedNotes, setShouldRefetch } = useContext(AppContext)
@@ -21,20 +23,34 @@ export function NotesListScreen() {
 	const [loading, setLoading] = useState(false)
 
 	const handleAddNote = async () => {
-		try {
-			setLoading(true)
-			const response = await createNoteService(noteTitle, noteContent)
-			if (response) {
-				// Clear input fields after successful note creation
-				setNoteTitle("")
-				setNoteContent("")
-				setShouldRefetch((prev: boolean) => !prev)
-			}
-			setLoading(false)
-		} catch (error) {
-			console.error("Error creating note:", error)
+		setLoading(true)
+		const response = await createNoteService(noteTitle, noteContent)
+		if (response) {
+			// Clear input fields after successful note creation
+			setNoteTitle("")
+			setNoteContent("")
+			setShouldRefetch((prev: boolean) => !prev)
 		}
+		setLoading(false)
 	}
+
+	const handleArchiveNote = async (note: Note) => {
+		setLoading(true)
+		const input = {
+			id: note.id,
+			archived: note.archived ? false : true,
+		}
+		const response = await updateNoteService(input)
+		if (response) {
+			setShouldRefetch((prev: boolean) => !prev)
+		}
+		setLoading(false)
+	}
+	// Filter unarchived notes, useMemo to optimize performance on larger lists
+	const unarchivedNotes = useMemo(() => {
+		return fetchedNotes.notes.filter((note: Note) => !note.archived)
+	}, [fetchedNotes.notes])
+
 	// loading state handling
 	if (fetchedNotes.loading) {
 		return <LtuSpinner />
@@ -51,7 +67,7 @@ export function NotesListScreen() {
 
 				{/* Notes List */}
 				<FlatList
-					data={fetchedNotes.notes}
+					data={unarchivedNotes}
 					keyExtractor={(item) => item.id}
 					showsVerticalScrollIndicator={false}
 					renderItem={({ item }) => (
@@ -60,7 +76,22 @@ export function NotesListScreen() {
 							<View>
 								<LtuTitle bold>{item.title}</LtuTitle>
 								<LtuText>{item.content}</LtuText>
+								{item.archived && <LtuText>Archived</LtuText>}
 							</View>
+							<View style={{ flex: 1 }} />
+							<LtuButton
+								variant={BUTTON_VARIANTS.PRIMARY}
+								size="sm"
+								style={{ width: 40, paddingVertical: 2, paddingHorizontal: 2 }}
+								onPress={() => {
+									handleArchiveNote(item)
+								}}
+							>
+								<LtuIcon
+									name="archive"
+									color={colors.ltuRed}
+								/>
+							</LtuButton>
 						</LtuCard>
 					)}
 					contentContainerStyle={{ paddingVertical: 20 }}

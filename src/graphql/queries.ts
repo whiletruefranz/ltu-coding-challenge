@@ -15,6 +15,7 @@ export const getNote = /* GraphQL */ `query GetNote($id: ID!) {
     content
     createdAt
     updatedAt
+    archived
     owner
     __typename
   }
@@ -32,6 +33,7 @@ export const listNotes = /* GraphQL */ `query ListNotes(
       content
       createdAt
       updatedAt
+      archived
       owner
       __typename
     }

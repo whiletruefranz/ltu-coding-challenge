@@ -18,6 +18,7 @@ export const onCreateNote = /* GraphQL */ `subscription OnCreateNote(
     content
     createdAt
     updatedAt
+    archived
     owner
     __typename
   }
@@ -36,6 +37,7 @@ export const onUpdateNote = /* GraphQL */ `subscription OnUpdateNote(
     content
     createdAt
     updatedAt
+    archived
     owner
     __typename
   }
@@ -54,6 +56,7 @@ export const onDeleteNote = /* GraphQL */ `subscription OnDeleteNote(
     content
     createdAt
     updatedAt
+    archived
     owner
     __typename
   }
